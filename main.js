@@ -29,9 +29,9 @@ console.log("fin");
 //funcion
 
 function pedirNombre () {
-    const name = prompt ("ingrese su nombre" );
-    console.log( nombre + name);
+    let name = prompt ("ingrese su nombre" );
+    console.log( "nombre " + name);
 
 }
 
-perdirnombre();
+pedirNombre();
