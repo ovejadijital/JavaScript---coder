@@ -35,3 +35,29 @@ function pedirNombre () {
 }
 
 pedirNombre();
+
+//objeto
+
+const persona = {nombre:"pablo", edad:30, apellido:"perez", sexo:"masculino",}
+
+console.log(persona.nombre);
+console.log(persona.edad);
+console.log(persona.apellido);
+console.log(persona.sexo);
+
+//array
+
+const array = [1,2];
+
+//metodos
+
+const numeros = [1, 2, 3, 4, 5, 6,]
+
+
+numeros.forEach( (num)=> {
+
+console.log(num);
+
+}
+
+)
