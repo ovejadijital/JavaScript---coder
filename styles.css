@@ -9,14 +9,13 @@ header h1{
     
 }
 
-.asientos1{
+.d-flex.align-items-center{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     padding: 40px;
     justify-content: center;
-    max-width: 90%;
-    gap: 15px;
+    gap:15px ;
     flex-direction: row;
 }
 
@@ -40,7 +39,21 @@ background-color: red;
 
 }
 
-.asiento.seleccionable.seleccionado{
 
-    background-color: blue;
+.asiento.seleccionable.seleccionado{
+background-color:blue ;
+
+}
+
+.boton{
+display: flex;
+justify-content: center;
+}
+
+
+
+#comprarasientos{
+background-color: green;
+height:40px ;
+width:80px ;
 }
