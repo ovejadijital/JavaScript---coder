@@ -94,7 +94,12 @@ function indiceasientoseleccionado(id) {
 
 function seleccionarasiento(asiento) {
     if (asiento.comprado) {
-        alert("este asiento no se puede seleccionar");
+        Swal.fire({
+            title: 'asiento no disponible',
+            text: 'este asiento esta comprado',
+            icon: 'error',
+            confirmButtonText: 'ok'
+          })
         return;
     }
 
