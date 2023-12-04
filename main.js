@@ -1,209 +1,229 @@
-class Asiento {
-    constructor(id, precio = 20) {
-        this.id = id;
-        this.comprado = false;
-        this.seleccionado = false;
-        this.precio = precio;
-    }
+class asiento {
+
+constructor (id, precio = 20) {
+this.id = id;
+this.comprado = true;
+this.seleccionado = false;
+this.precio = precio;
 }
 
-// Funciones
-function setearTotalAsientosSeleccionados(asientosSeleccionados) {
-
-    const totalAsientosSeleccionados = asientosSeleccionados.reduce( (acc, el) => {
-
-        return acc + el.precio;
-
-    }, 0);
-
-    // Cambiamos el HTML
-    spanTotalAsientosSeleccionados.innerText = `$${totalAsientosSeleccionados}`;
 }
 
-function comprarAsiento(asiento) {
+function seteartotalasientosseleccionados(asientosseleccionados) {
+    
+const totalasientosseleccionados = asientosseleccionados.reduce( (el) =>{
+    
+     return acc + el.precio;
 
+}, 0);
+
+spantotalasientosseleccionados.innerText = '$${totalasientosseleccionados}';
+
+
+}
+
+
+function comprarasientos(asiento) {
     asiento.comprado = true;
 
-    // Le ponemos al div del asiento la clase seleccionado
-    const divAsiento = document.getElementById(`asiento-${asiento.id}`);
-    divAsiento.classList.remove("seleccionado");
-    divAsiento.classList.add("comprado");
+    const divasiento = document.getElementById( asiento-$,{siento,id});
+    divasiento.classList.remove("seleccionado");
+    divasiento.classList.add("comprado");
 }
 
-function buscarAsientoEnLista(id) {
+function buscarasientoenlista(id) {
+    
 
-    let asientoEncontrado = null;
+    let asientoencontrado = null;
 
-    for(const listaDeAsientos of asientos) {
-
-        for(const asiento of listaDeAsientos) {
-
-            if(asiento !== null && asiento.id === id) {
-                asientoEncontrado = asiento;
-            }
-        }
+    for (const asiento of listadeasientos) {
+        
+      if (asiento !== null && asiento.id ===id) {
+        asientoencontrado = asiento;
+      }  
     }
 
-    return asientoEncontrado;
+    return asientoencontrado;
+
 }
 
-function obtenerAsientosComprados() {
-    asientosComprados = JSON.parse(localStorage.getItem("asientosComprados")) || [];
 
-    // Recorremos los asientos comprados
-    for(const asientoComprado of asientosComprados) {
-
-        // Buscamos el asiento en el listado de asientos
-        const asiento = buscarAsientoEnLista(asientoComprado.id);
-
-        if(asiento !== null) {
-
-            asiento.comprado = true;
-
-        }
+function obtenerasientoscomprados() {
+    asientoscomprados = JSON.parse(localStorage.getItem("asientoscomprados")) || [];
+for (const asientocomprados of asientoscomprados) {
+    const asiento = buscarasientoenlista(asientocomprado.id);
+    
+    if (asiento !== null) {
+        
+      asiento.comprado = true;
 
     }
+
+}
 }
 
-function comprarAsientos() {
 
-    const asientosCompradosYSeleccionados = [
-        ...asientosComprados,
-        ...asientosSeleccionados,
-    ];
+function comprarasientos() {
+    
+     const asientoscompradosyseleccionados = [
+        ...asientoscomprados,
+        ...asientosseleccionados,
+     ];
 
-    // Recorrer asientos seleccionados
-    for(const asientoSeleccionado of asientosSeleccionados) {
-        comprarAsiento(asientoSeleccionado);
-    }
+      for (const asientoseleccionado of asientosseleccionados) {
+        asientoseleccionado.comprado = true;
+        
+      }
 
-    // Limpiar lista de asientos seleccionados
-    asientosSeleccionados = [];
+      asientosseleccionados = [];
 
-    // Cargamos los asientos a localStorage
-    localStorage.setItem("asientosComprados", JSON.stringify(asientosCompradosYSeleccionados));
+     localStorage.setItem("asientoscomprados", JSON.stringify(asientoscompradosyseleccionados));
 
-    // Obtenemos los asientos comprados
-    obtenerAsientosComprados();
+     obtenerasientoscomprados();
 
-    // Seteamos el total
-    setearTotalAsientosSeleccionados(asientosSeleccionados);
+seteartotalasientosseleccionados(asientosseleccionados);
+
 }
 
-function indiceAsientoSeleccionado(id) {
-    return asientosSeleccionados.findIndex( (el) => {
+function indiceasientoseleccionado(id) {
+    return asientosseleccionados.findIndex( (el) => {
         return el.id === id;
     });
+
 }
 
-function seleccionarAsiento(asiento) {
-
-    if(asiento.comprado) {
-        alert("ESTE ASIENTO NO SE PUEDE SELECCIONAR");
+function seleccionarasiento(asiento) {
+    if (asiento.comprado) {
+        alert("este asiento no se puede seleccionar");
         return;
     }
 
-    // Le ponemos al div del asiento la clase seleccionado
-    const divAsiento = document.getElementById(`asiento-${asiento.id}`);
 
-    // Agregamos el asiento a la lista
-    const indexAsientoSeleccionado = indiceAsientoSeleccionado(asiento.id);
-    if(indexAsientoSeleccionado !== -1) {
+  
+    divasiento.className += "seleccionado";
 
-        // Seteamos el asiento a que no está seleccionado
+     const indexasientoseleccionado = indiceasientoseleccionado(siento.id);
+
+    if (indexasientoseleccionado !== -1) {
+      
         asiento.seleccionado = false;
+        divasiento.classList.remove("seleccionado");
 
-        // Remover la clase
-        divAsiento.classList.remove("seleccionado");
-
-        // Sacar de la lista sientos seleccionados...
-        asientosSeleccionados.splice(indexAsientoSeleccionado, 1);
-
-    } else {
-
-        // Seteamos el asiento a seleccionado
+          asientosseleccionados.splice(indexasientoseleccionado, 1);
+    } else{
         asiento.seleccionado = true;
 
-        // Agregamos el asiento a la lista de asientos seleccionados
-        asientosSeleccionados.push(asiento);
-
-        // Agregamos la clase
-        divAsiento.classList.add("seleccionado");
+       divasiento.classList.add("seleccionad");
+      asientosseleccionados.push(asiento);
+  
     }
 
-    // Seteamos el total de los asientos seleccionados
-    setearTotalAsientosSeleccionados(asientosSeleccionados);
+ 
 }
 
-function renderizarAsientos(asientos) {
+function renderizarasientos(asientos) {
+    const divasientos = document.getElementById("asientos");
 
-    // Limpio el contenedor
-    const divAsientos = document.getElementById("asientos");
-    divAsientos.innerHTML = "";
+divasientos.innerHTML = "";
 
-    // Recorrer los asientos
-    for(const filaDeAsientos of asientos) {
 
-        // Creamos el div para la fila de asientos
-        const divFlex = document.createElement("div");
-        divFlex.className = "d-flex align-items-center";
+for(const filadeasientos of asientos){
 
-        for(const asiento of filaDeAsientos) {
+const divflex = document.createElement("div");
+divflex.className = "d-flex align-items-center";
 
-            const divAsiento = document.createElement("div");
-            divAsiento.className = "asiento";
+for(const siento of filadeasientos) {
 
-            // Chequeo si es un asiento o un espacio vacío
-            if(asiento !== null) {
-                divAsiento.id = `asiento-${asiento.id}`;
-                divAsiento.className += " seleccionable";
 
-                // Chequear si está seleccionado o comprado
-                if(asiento.comprado) {
-                    divAsiento.className += " comprado";
+  const divasiento = document.createElement("div");
+  divasiento.className = "asiento";
+  
+
+if (asiento !== null) {
+    divasiento.className += "seleccionable";
+    divasiento.id = asiento-$;{asiento};
+
+if (asiento.comprado) {
+divasiento.className += "comprado";   
+
+
+}
+
+if (siento.seleccionado) {
+    divasiento.className += "seleccionado";
+}
+
+divasiento.addEventListener("click", () => {
+    seleccionarasiento(asiento);
+});
+
+}
+
+
+divflex.append(divasiento);
+
+   }
+
+
+  divasientos.append(divflex);
+
+ }
+
+
+}
+
+
+function obtenerasientosJSON(params) {
+    return new Promise( (resolve, reject) => {
+        fetch('/asientos.JSON').then( (Response) => {
+            return Response.json();
+    
+        }).then( (Responsejson) => {
+           
+          for(const filadeasientos of Responsejson){
+             
+            const fila = [];
+    
+            for(const asiento of filadeasientos){
+                
+                if (asiento ¡== "") {
+                    fila.push(new asiento(asiento));
+                } else {
+                  fila.push(null);
+                
                 }
-
-                if(asiento.seleccionado) {
-                    divAsiento.className += " seleccionado";
-                }
-
-                // Evento de click
-                divAsiento.addEventListener("click", () => {
-
-                    seleccionarAsiento(asiento);
-
-                });
+    
+    
             }
+            asientos.push(fila);
+    
+          }
+           
+          resole(asientoscargados);
 
-            // Agregamos el asiento al flex
-            divFlex.append(divAsiento);
-        }
 
-        // Agregamos el flex al contenedor
-        divAsientos.append(divFlex);
-
-    }
-
+        });
+    
+   
+    });
+    
 }
 
-// Inicio del programa
-let asientosComprados = [];
-let asientosSeleccionados = [];
-const asientos = [
-    [new Asiento("A1"), new Asiento("A2"), null, new Asiento("A3"), new Asiento("A4")],
-    [new Asiento("B1"), new Asiento("B2"), null, new Asiento("B3"), new Asiento("B4")],
-    [new Asiento("C1"), new Asiento("C2"), null, new Asiento("C3"), new Asiento("C4")],
-    [new Asiento("D1"), new Asiento("D2"), null, new Asiento("D3"), new Asiento("D4")],
-    [new Asiento("E1"), new Asiento("E2"), new Asiento("E3"), new Asiento("E4"), new Asiento("E5")],
-    [new Asiento("F1"), new Asiento("F2"), new Asiento("F3"), new Asiento("F4"), new Asiento("F5")],
-];
 
-const spanTotalAsientosSeleccionados = document.getElementById("totalAsientosSeleccionados");
+let asientoscomprados = obtenerasientoscomprados();
+let asientosseleccionados = [];
+const asientos = [];
 
-const botonComprarAsientos = document.getElementById("comprarAsientos");
-botonComprarAsientos.addEventListener("click", comprarAsientos);
+const spantotalasientosseleccionados = document.getElementById("totalasientosseleccionados");
 
-obtenerAsientosComprados();
+const botoncomprarasientos = document.getElementById("comprarasientos");
+botoncomprarasientos.addEventListener("click", comprarasientos);
 
-// Renderizar asientos
-renderizarAsientos(asientos);
+obtenerasientosJSON().then( () => {
+obtenerasientoscomprados();
+
+
+renderizarasientos(asientos);
+
+
+});
