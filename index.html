@@ -94,3 +94,11 @@
 </htm>
 alert("este asiento no se puede seleccionar");
         return;
+
+        
+        Swal.fire({
+          title: 'asiento no disponible',
+          text: 'este asiento esta comprado',
+          icon: 'error',
+          confirmButtonText: 'ok'
+        })
