@@ -191,7 +191,7 @@ function obtenerasientosJSON(params) {
     
             for(const asiento of filadeasientos){
                 
-                if (asiento ¡== "") {
+                if (asiento !== "") {
                     fila.push(new asiento(asiento));
                 } else {
                   fila.push(null);
