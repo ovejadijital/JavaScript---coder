@@ -49,8 +49,8 @@ function buscarasientoenlista(id) {
 
 
 function obtenerasientoscomprados() {
-    asientoscomprados = JSON.parse(localStorage.getItem("asientoscomprados")) || [];
-for (const asientocomprados of asientoscomprados) {
+    const asientosComprados = JSON.parse(localStorage.getItem("asientoscomprados")) || [];
+for (const asientocomprado of asientosComprados) {
     const asiento = buscarasientoenlista(asientocomprado.id);
     
     if (asiento !== null) {
@@ -118,7 +118,7 @@ function seleccionarasiento(asiento) {
     } else{
         asiento.seleccionado = true;
 
-       divasiento.classList.add("seleccionad");
+       divasiento.classList.add("seleccionado");
       asientosseleccionados.push(asiento);
   
     }
@@ -215,13 +215,14 @@ function obtenerasientosJSON(params) {
 }
 
 
-let asientoscomprados = obtenerasientoscomprados();
+
 let asientosseleccionados = [];
 const asientos = [];
 
 const spantotalasientosseleccionados = document.getElementById("totalasientosseleccionados");
 
 const botoncomprarasientos = document.getElementById("comprarasientos");
+console.log(botoncomprarasientos)
 botoncomprarasientos.addEventListener("click", comprarasientos);
 
 obtenerasientosJSON().then( () => {
