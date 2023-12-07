@@ -23,6 +23,32 @@ function seteartotalasientosseleccionados(asientosseleccionados) {
   }
 }
 
+
+function realizarcompra() {
+  const asientoscompradosyseleccionados = [
+    ...asientosComprados,
+    ...asientosseleccionados,
+  ];
+
+  for (const asientoseleccionado of asientosseleccionados) {
+    asientoseleccionado.comprado = true;
+    const divasiento = document.getElementById(`asiento-${asientoseleccionado.id}`);
+    divasiento.classList.remove("seleccionado");
+    divasiento.classList.add("comprado");
+  }
+
+  asientosseleccionados = [];
+
+  localStorage.setItem(
+    "asientoscomprados",
+    JSON.stringify(asientoscompradosyseleccionados)
+  );
+
+  obtenerasientoscomprados();
+
+  seteartotalasientosseleccionados(asientoscompradosyseleccionados);
+}
+
 let listadeasientos = [];
 
 function buscarasientoenlista(id) {
@@ -72,19 +98,25 @@ function comprarasientos() {
   obtenerasientoscomprados();
 
   seteartotalasientosseleccionados(asientosseleccionados);
-}
+
+  }
+
+
+
 
 function indiceasientoseleccionado(id) {
-  return asientosseleccionados.findIndex((el) => el.id === id);
+  return asientosseleccionados.findIndex((el) => {
+    return el.id === id;
+  });
 }
 
 function seleccionarasiento(asiento) {
   if (asiento.comprado) {
     Swal.fire({
-      title: "asiento no disponible",
-      text: "este asiento está comprado",
+      title: "Asiento no disponible",
+      text: "Este asiento está comprado",
       icon: "error",
-      confirmButtonText: "ok",
+      confirmButtonText: "OK",
     });
     return;
   }
@@ -105,7 +137,36 @@ function seleccionarasiento(asiento) {
       divasiento.classList.add("seleccionado");
       asientosseleccionados.push(asiento);
     }
+
+    // Actualizar el total de asientos seleccionados
+    seteartotalasientosseleccionados(asientosseleccionados);
   }
+}
+
+function realizarcompra() {
+  const asientoscompradosyseleccionados = [
+    ...asientosComprados,
+    ...asientosseleccionados,
+  ];
+
+  for (const asientoseleccionado of asientosseleccionados) {
+    asientoseleccionado.comprado = true;
+    const divasiento = document.getElementById(`asiento-${asientoseleccionado.id}`);
+    divasiento.classList.remove("seleccionado");
+    divasiento.classList.add("comprado");
+  }
+
+  asientosseleccionados = [];
+
+  localStorage.setItem(
+    "asientoscomprados",
+    JSON.stringify(asientoscompradosyseleccionados)
+  );
+
+  obtenerasientoscomprados();
+
+  // Actualizar el total de asientos seleccionados después de la compra
+  seteartotalasientosseleccionados(asientosseleccionados);
 }
 
 function renderizarasientos(asientos) {
@@ -120,6 +181,9 @@ function renderizarasientos(asientos) {
       const divasiento = document.createElement("div");
       divasiento.className = "asiento";
 
+
+
+    
       if (asiento !== null) {
         divasiento.className += " seleccionable";
         divasiento.id = `asiento-${asiento.id}`;
@@ -128,7 +192,7 @@ function renderizarasientos(asientos) {
           divasiento.className += " comprado";
         }
 
-        if (asiento.seleccionado && !asiento.comprado) {
+        if (asiento.seleccionado) {
           divasiento.className += " seleccionado";
         }
 
@@ -145,10 +209,14 @@ function renderizarasientos(asientos) {
 }
 
 
+
+
+
+
+
 function obtenerasientosJSON(params) {
   return new Promise((resolve, reject) => {
-    asientos.length = 0; 
-
+    asientos.length = 0; // 
     fetch("./asientos.json")
       .then((Response) => {
         return Response.json();
@@ -173,12 +241,12 @@ function obtenerasientosJSON(params) {
 let asientosseleccionados = [];
 const asientos = [];
 
-const spantotalasientosseleccionados = document.getElementById(
-  "asientosseleccionados"
-);
-const botoncomprarasientos = document.getElementById("comprarasientos");
 
-botoncomprarasientos.addEventListener("click", comprarasientos);
+
+const spantotalasientosseleccionados = document.getElementById("asientosseleccionados");
+const botoncomprarasientos = document.getElementById("comprarasientos");
+botoncomprarasientos.addEventListener("click", realizarcompra);
+
 
 obtenerasientosJSON().then(() => {
   obtenerasientoscomprados();
